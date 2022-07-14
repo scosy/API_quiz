@@ -4,13 +4,11 @@ RSpec.describe Question, type: :model do
   subject do
     category = Category.create(name: Faker::Internet.username(specifier: 6..80))
     right_answer = RightAnswer.create(answer: Faker::Lorem.word)
-    wrong_answer = WrongAnswer.create(answer: Faker::Lorem.word)
     described_class.new(
       question: Faker::Lorem.question,
       difficulty: Random.new.rand(1..5),
       category_id: category.id,
-      right_answer_id: right_answer.id,
-      wrong_answer_id: wrong_answer.id
+      right_answer_id: right_answer.id
     )
   end
   it 'is valid with valid attributes' do
@@ -50,11 +48,6 @@ RSpec.describe Question, type: :model do
 
   it 'is not valid without a right_answer_id' do
     subject.right_answer_id = nil
-    expect(subject).to_not be_valid
-  end
-
-  it 'is not valid without a wrong_answer_id' do
-    subject.wrong_answer_id = nil
     expect(subject).to_not be_valid
   end
 end
