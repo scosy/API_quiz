@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_13_141007) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_14_074127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_141007) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "right_answer_id", null: false
+    t.bigint "wrong_answer_id", null: false
     t.index ["category_id"], name: "index_questions_on_category_id"
+    t.index ["right_answer_id"], name: "index_questions_on_right_answer_id"
+    t.index ["wrong_answer_id"], name: "index_questions_on_wrong_answer_id"
+  end
+
+  create_table "right_answers", force: :cascade do |t|
+    t.string "answer", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,5 +47,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_141007) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "wrong_answers", force: :cascade do |t|
+    t.string "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "right_answers"
+  add_foreign_key "questions", "wrong_answers"
 end
