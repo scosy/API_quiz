@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject do
     described_class.new(
-      username: 'o' * 5,
-      email: 'email@rightformat.com',
-      password_digest: 'HHd8o$*6v@9akS'
+      username: Faker::Internet.username(specifier: 5..50),
+      email: Faker::Internet.email,
+      password_digest: Faker::Internet.password(min_length: 8, max_length: 16, mix_case: true, special_characters: true)
     )
   end
 
