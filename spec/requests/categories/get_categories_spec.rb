@@ -16,4 +16,16 @@ RSpec.describe 'Categories', type: :request do
       expect(response).to have_http_status(:success)
     end
   end
+
+  describe 'GET /show/1' do
+    before do
+      @category = FactoryBot.create(:category)
+      get "/api/v1/categories/#{@category.id}"
+      @json = JSON.parse(response.body)
+    end
+
+    it 'returns the category based on id in url' do
+      expect(@json['id']).to eq(@category.id)
+    end
+  end
 end

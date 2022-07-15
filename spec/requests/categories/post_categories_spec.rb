@@ -4,7 +4,7 @@ RSpec.describe 'Categories', type: :request do
   describe 'POST /create' do
     context 'with valid parameters' do
       let!(:my_category) { FactoryBot.build(:category) }
-      
+
       before do
         post '/api/v1/categories', params:
                           { category: {
