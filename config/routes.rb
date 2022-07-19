@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :categories
       resources :right_answers
       resources :questions
+      resources :wrong_answers
     end
   end
 end
