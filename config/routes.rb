@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :right_answers
       resources :questions
       resources :wrong_answers
+      resources :users
     end
   end
 end
