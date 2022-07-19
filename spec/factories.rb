@@ -10,7 +10,12 @@ FactoryBot.define do
   factory :question do
     sequence(:question) { |n| "#{Faker::Lorem.question}#{n}" }
     difficulty { 1 }
-    category_id { Category.find_or_create_by(name: 'category').id }
-    right_answer_id { RightAnswer.find_or_create_by(answer: 'answer').id }
+    category_id { FactoryBot.create(:category).id }
+    right_answer_id { FactoryBot.create(:right_answer).id }
+  end
+
+  factory :wrong_answer do
+    sequence(:answer) { |n| "#{Faker::Lorem.word}#{n}" }
+    question_id { FactoryBot.create(:question).id }
   end
 end

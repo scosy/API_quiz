@@ -10,8 +10,8 @@ RSpec.describe 'Questions', type: :request do
                           { question: {
                             question: my_question.question,
                             difficulty: 5,
-                            category_id: Category.find_or_create_by(name: 'category').id,
-                            right_answer_id: RightAnswer.find_or_create_by(answer: 'answer').id
+                            category_id: FactoryBot.create(:category).id,
+                            right_answer_id: FactoryBot.create(:right_answer).id
                           } }
       end
 
