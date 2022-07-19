@@ -18,4 +18,10 @@ FactoryBot.define do
     sequence(:answer) { |n| "#{Faker::Lorem.word}#{n}" }
     question_id { FactoryBot.create(:question).id }
   end
+
+  factory :user do
+    sequence(:username) { Faker::Internet.username(specifier: 5..50) }
+    sequence(:email) { |n| "#{n}#{Faker::Internet.email}" }
+    password_digest { 'HHd8o$*6v@9akS' }
+  end
 end
