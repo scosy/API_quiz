@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorized, only: [:auto_login]
+
   def index
     @users = User.all
     render json: @users
@@ -13,10 +15,26 @@ class Api::V1::UsersController < ApplicationController
     @user = User.create user_params
 
     if @user.valid?
-      render json: @user, status: :created
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: token }
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { error: @user.errors.full_messages }
     end
+  end
+
+  def login
+    @user = User.find_by(username: params[:username])
+
+    if @user&.authenticate(params[:password])
+      token = encode_token({ user_id: @user.id })
+      render json: { user: @user, token: token }
+    else
+      render json: { error: 'Invalid username or password' }
+    end
+  end
+
+  def auto_login
+    render json: @user
   end
 
   def destroy
@@ -28,6 +46,6 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(%i[username email password_digest])
+    params.permit(%i[username email password])
   end
 end

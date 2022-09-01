@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     described_class.new(
       username: Faker::Internet.username(specifier: 5..50),
       email: Faker::Internet.email,
-      password_digest: Faker::Internet.password(min_length: 8, max_length: 16, mix_case: true, special_characters: true)
+      password: Faker::Internet.password(min_length: 8, max_length: 16, mix_case: true, special_characters: true)
     )
   end
 
@@ -66,7 +66,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'is not valid without a password' do
-    subject.password_digest = nil
+    subject.password = nil
     expect(subject).to_not be_valid
   end
 
@@ -74,7 +74,7 @@ RSpec.describe User, type: :model do
     invalid_passwords = %w[Ph5SCWGcOveGgVm9 S5bR6^ BOAKLR3*D&2M$OM1 Batgli^VmMv
                            OMIJZEOIMJFZ4 #GWssCb0APxxt&2cl !3xhff5tin]
     invalid_passwords.each do |invalid_password|
-      subject.password_digest = invalid_password
+      subject.password = invalid_password
       expect(subject).to_not be_valid
     end
   end
@@ -83,7 +83,7 @@ RSpec.describe User, type: :model do
     valid_passwords = %w[HHd8o$*6v@9akS ^CX5qhjKr p!gQr8r9DP nKzk3!$Tc1
                          23WK9Hy5!6CHLP NYewIx#X7$Pb1QgU]
     valid_passwords.each do |valid_password|
-      subject.password_digest = valid_password
+      subject.password = valid_password
       expect(subject).to be_valid
     end
   end
